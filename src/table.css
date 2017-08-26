@@ -1,0 +1,105 @@
+.abilitiesTable {
+
+}
+
+.centered {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+
+}
+
+.cell {
+    width: 100%;
+    height: 30px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.unit-select {
+    height: 40px;
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.parent {
+    text-align:center
+}
+
+.selection {
+  padding-bottom: 10px;
+}
+
+.tableContainer {
+    border-radius: 25px;
+    background-color: lightblue;
+    width: 45%;
+    padding-bottom: 50px;
+    text-align: center;
+    display: inline-table;
+}
+.tc-planner {
+    font-size: 20px;
+}
+
+.tc-okay {
+    background-color: #b4f74d;
+}
+
+.tc-missing {
+    background-color: #ef9a9a;
+}
+
+.tableCellImage {
+    max-width: 78px;
+}
+
+.unitContainer {
+    border-radius: 25px;
+    background-color: lightblue;
+    width: 90%;
+    padding-bottom: 50px;
+    text-align: center;
+    display: inline-table;
+}
+
+.MyStashHeader {
+    margin-top: 24px;
+}
+
+.White {
+    background-color: #D9E4EA;
+}
+
+.Black {
+    background-color: #45204E;
+    color: White;
+}
+
+.Green {
+    background-color: #2B945B;
+    color: White;
+}
+
+.Power {
+    background-color: #8F1B25;
+    color: White;
+}
+
+.Guard {
+    background-color: #A68E49;
+}
+
+.Healing {
+    background-color: #34BCC2;
+}
+
+.Support {
+    background-color: #65A13A;
+}
+
+.Tech {
+    background-color: #888371;
+}
