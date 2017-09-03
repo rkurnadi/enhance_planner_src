@@ -1,20 +1,28 @@
 import React, { Component } from 'react';
-import data from './data_gl.json'
 import inventory from './LocalData.js'
 import UnitView from './UnitView.js'
+import classnames from 'classnames';
+
 
 class UnitTableView extends Component {
     constructor(props){
         super(props)
         this.state = this.getState();
         this.onInventoryChange = this.onInventoryChange.bind(this);
+        //this.toggleAwakeningMode = this.toggleAwakeningMode.bind(this);
     };
 
     componentDidMount() {
+        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.ABILITIES );
+        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.MATS );
+        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.AWAKENING_MODE );
         document.addEventListener('abilityChange', this.onInventoryChange);
     }
 
     componentWillUnmount() {
+        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.ABILITIES );
+        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.MATS );
+        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.AWAKENING_MODE );
         document.removeEventListener('abilityChange', this.onInventoryChange);
     }
 
@@ -23,8 +31,17 @@ class UnitTableView extends Component {
 
           return(
               <div className='unitContainer'>
-              <table className='centered'><tbody>
-              <tr><th>Unit</th><th>Ability</th><th>Type</th><th>T1</th><th>T2</th><th>T3</th><th>T4</th><th>T5</th></tr>
+              <table className={classnames('centered', 'unitcosttable')}><tbody>
+              <tr>
+                  <th>Unit</th>
+                  <th>Ability</th>
+                  <th>Type</th>
+                  <th className='unitcost'>T1</th>
+                  <th className='unitcost'>T2</th>
+                  <th className='unitcost'>T3</th>
+                  <th className='unitcost'>T4</th>
+                  <th className='unitcost'>T5</th>
+              </tr>
               {self.state.abilities.map(function(item, index) {
                     var aKey = self.state.abilitiesKeys[index];
                     return (<UnitView unitId={item.unit} abilityId={item.ability} abilityKey={aKey} key={aKey} jp={self.props.jp}/>);

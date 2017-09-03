@@ -12,24 +12,31 @@ class UnitView extends Component {
           unitId: props.unitId,
           abilityId: props.abilityId,
           abilityKey: props.abilityKey,
+          //inventoryMats: inventory.getMaterials(),
       };
 
       this.onRemove = this.onRemove.bind(this);
       this.onEnhance = this.onEnhance.bind(this);
+      //this.onAwakeThisUnit = this.onAwakeThisUnit.bind(this);
+      //this.onRemoveThisSummon = this.onRemoveThisSummon.bind(this);
+      //this.onMaterialChange = this.onMaterialChange.bind(this);
   };
 
   render() {
       var unitData = this.getRowData(this.state.unitId, this.state.abilityId, this.props.jp);
+      //console.log(unitData);
+      //console.log(unitData.name);
+      //console.log(unitData.ability);
       var typeName = Consts.crystalTypes[unitData.ability.type].name;
       return( <tr>
               <td>{unitData.name}</td>
               <td>{unitData.ability.name}</td>
               <td>{typeName}</td>
-              <td>{unitData.ability.mats[0]}</td>
-              <td>{unitData.ability.mats[1]}</td>
-              <td>{unitData.ability.mats[2]}</td>
-              <td>{unitData.ability.mats[3]}</td>
-              <td>{unitData.ability.mats[4]}</td>
+              <td className='unitcost'>{unitData.ability.mats[0]}</td>
+              <td className='unitcost'>{unitData.ability.mats[1]}</td>
+              <td className='unitcost'>{unitData.ability.mats[2]}</td>
+              <td className='unitcost'>{unitData.ability.mats[3]}</td>
+              <td className='unitcost'>{unitData.ability.mats[4]}</td>
               <td><button onClick={this.onEnhance} title='Enhance'>Enhance</button></td>
               <td><button onClick={this.onRemove} title='Remove'>Remove</button></td>
              </tr>
@@ -61,6 +68,7 @@ class UnitView extends Component {
   }
 
   onRemove() {
+      //e.preventDefault();
       inventory.removeAbility(this.state.abilityKey);
   }
 }

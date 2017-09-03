@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
+//import logo from './logo.svg';
 import './App.css';
 import data from './data_gl.json'
 import jp_data from './data_jp.json'
 import UnitTableView from './UnitTableView';
 import classnames from 'classnames';
+//import Consts from './Consts.js'
 import inventory from './LocalData.js'
 import InventoryView from './InventoryView.js'
 import PlannedView from './PlannedView.js'
@@ -22,6 +24,7 @@ class App extends Component {
       this.setState ({ checked: !this.state.checked});
       var event = new Event('abilityChange');
       document.dispatchEvent(event);
+      //TODO:save server to localstorage
   }
 
   render() {

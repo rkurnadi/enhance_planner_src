@@ -9,7 +9,7 @@
 
 .App-header {
   background-color: #222;
-  height: 150px;
+  height: 70px;
   padding: 20px;
   color: white;
 }
@@ -167,4 +167,17 @@
 }
 .switch-left-right .switch-input:checked ~ .switch-label {
 	background: inherit;
+}
+
+.unitcosttable {
+  border-collapse: collapse;
+}
+.unitcosttable td {
+  border: 1px solid black;
+}
+
+@media screen and (max-width: 1280px) {
+    .unitcost {
+        display: none;
+    }
 }

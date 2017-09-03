@@ -30,14 +30,17 @@ class InventoryView extends Component {
 
     render() {
         var self = this;
+        //var tierCount = Object.keys(Consts.crystalTiers).length;
+        //var localTiers = Consts.crystalTiers;
+        //var localType = Consts.crystalTypes;
+        //var localTypeArr = Array.from(Object.keys(localType));
         return (
                <div className='tableContainer' align='center'>
-               <h2>Inventory</h2>
+               <h2>Have</h2>
                <table className='centered'><tbody>
                <tr><th/>
                {
-                   Consts.crystalTiers.map(function(item) {
-                       var t1 = item;
+                   Consts.crystalTiers.map(function(item) {                       
                        return(<th title={item.name}>{item.shortName}</th>);
                    })
                }

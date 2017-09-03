@@ -22,11 +22,12 @@ class LocalData {
     };
 
     update = function(typeId, tierId, value) {
+        // Negatives not allowed
         value = Math.max(0, value);
         this.crystals[typeId][tierId] = value;
         localStorage.setItem(LOCAL_STORAGE_INVENTORY + typeId + '-' + tierId, value);
- 
-		var event = new Event('invChange');
+        //this.notifyListeners(this.LISTEN.MATS);
+        var event = new Event('invChange');
         document.dispatchEvent(event);
     };
 
@@ -36,7 +37,7 @@ class LocalData {
         this.abilities.push(entry);
         this.abilitiesKeys.push(counter++);
         localStorage.setItem(LOCAL_STORAGE_ABILITIES , JSON.stringify(this.abilities));
-
+        //this.notifyListeners(this.LISTEN.ABILITIES);
         var event = new Event('abilityChange');
         document.dispatchEvent(event);
 
@@ -49,7 +50,7 @@ class LocalData {
         this.abilitiesKeys.splice(index, 1);
 
         localStorage.setItem(LOCAL_STORAGE_ABILITIES , JSON.stringify(this.abilities));
-
+        //this.notifyListeners(this.LISTEN.ABILITIES);
         var event = new Event('abilityChange');
         document.dispatchEvent(event);
     }
@@ -66,7 +67,7 @@ class LocalData {
         }
         var abilityInfo = this.abilities[index];
         var dataLen = data.length;
-
+        //var tempData = data;
         for (var i = 0; i < dataLen; i++) {
             if (data[i].id === abilityInfo.unit) {
                 var unit = data[i];
@@ -80,10 +81,7 @@ class LocalData {
                 break;
             }
         }
-
-        var crystType = Consts.crystalTypes.filter(function(a){
-            return a.name === enhancedAbility.type;
-        });
+        
         var crystTypeId = enhancedAbility.type;
 
         this.removeAbility(abilityKey);
@@ -91,7 +89,18 @@ class LocalData {
         {
           this.update(crystTypeId, k, this.crystals[crystTypeId][k] - enhancedAbility.mats[k]);
         }
+        /*
+        this.update(crystTypeId, 1, this.crystals[crystTypeId][1] - enhancedAbility.T2);
+        this.update(crystTypeId, 2, this.crystals[crystTypeId][2] - enhancedAbility.T3);
+        this.update(crystTypeId, 3, this.crystals[crystTypeId][3] - enhancedAbility.T4);
+        this.update(crystTypeId, 4, this.crystals[crystTypeId][4] - enhancedAbility.T5);
+        */
 
+        console.log('calculated')
+
+        console.log('found enhanced');
+        console.log(enhancedAbility);
+        //this.notifyListeners(this.LISTEN.ABILITIES);
         var event = new Event('abilityChange');
         document.dispatchEvent(event);
     }
@@ -131,6 +140,9 @@ class LocalData {
         var self = this;
         var retArr = [];
         //initialize the matrix
+        //var localTiersArr = Array.from(Object.keys(Consts.crystalTiers));
+        //var localTypesArr = Array.from(Object.keys(Consts.crystalTypes));
+
         Consts.crystalTypes.forEach(function(type, outerIndex) {
             var typeArr = [];
             Consts.crystalTiers.forEach(function(tier, innerIndex){
@@ -148,6 +160,9 @@ class LocalData {
         }
         //calculate total of needed crystals
         self.abilities.forEach(function(abilityInfo) {
+            //var unitId = abilityInfo.unit;
+            //var abilityId = abilityInfo.ability;
+            //var ability = data[abilityInfo.unit].ability[abilityInfo.ability];
             var unit = data.filter(function(u) {
                 return u.id === abilityInfo.unit;
             })
@@ -155,12 +170,24 @@ class LocalData {
                 return a.id === abilityInfo.ability;
             })
             var ability = ability_arr[0];
-
+            /*
+            var crystType = ability.type;
+            var type = Consts.crystalTypes.filter(function(a) {
+                return a.name === crystType;
+            })
+            */
             var crystTypeNumber = ability.type;
             for (var i = 0; i<5; i++)
             {
                 retArr[crystTypeNumber][i] += ability.mats[i];
             }
+            /*
+            retArr[crystTypeNumber][0] += ability.T1;
+            retArr[crystTypeNumber][1] += ability.T2;
+            retArr[crystTypeNumber][2] += ability.T3;
+            retArr[crystTypeNumber][3] += ability.T4;
+            retArr[crystTypeNumber][4] += ability.T5;
+            */
         });
 
         //adjust with inventory values
@@ -177,6 +204,11 @@ class LocalData {
 
 var inventory = new LocalData();
 
+//var cType = Object.keys(Consts.crystalTypes);
+//var cTier = Object.keys(Consts.crystalTiers);
+//var tierCount = cTier.length;
+
+//var index = 0;
 //initialize crystals inventory from localStorage
 Consts.crystalTypes.forEach(function(crystalType, typeIndex) {
     var tierArray = []
