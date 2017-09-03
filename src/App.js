@@ -36,7 +36,6 @@ class App extends Component {
       this.setState ({ checked: !this.state.checked});
       var event = new Event('abilityChange');
       document.dispatchEvent(event);
-      //TODO:save server to localstorage
       var serverchoice = this.state.checked ? 'jp' : 'gl';
 
       localStorage.setItem(LOCAL_STORAGE_SERVER , serverchoice);
