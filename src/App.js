@@ -8,6 +8,8 @@ import inventory from './LocalData.js'
 import InventoryView from './InventoryView.js'
 import PlannedView from './PlannedView.js'
 
+const LOCAL_STORAGE_SERVER = "ffbe-abi-awa-server";
+
 class App extends Component {
   constructor(props) {
       super(props)
@@ -18,11 +20,25 @@ class App extends Component {
       this.onServerChange = this.onServerChange.bind(this)
   }
 
+  componentDidMount() {
+      const server = localStorage.getItem(LOCAL_STORAGE_SERVER);
+      if (server) {
+          if (server == 'jp') {
+              this.setState({checked:false});
+          }
+          else {
+              this.setState({checked:true});
+          }
+      }
+  }
+
   onServerChange() {
       this.setState ({ checked: !this.state.checked});
       var event = new Event('abilityChange');
       document.dispatchEvent(event);
-      //TODO:save server to localstorage
+      var serverchoice = this.state.checked ? 'jp' : 'gl';
+
+      localStorage.setItem(LOCAL_STORAGE_SERVER , serverchoice);
   }
 
   render() {
@@ -72,7 +88,7 @@ class MyForm extends Component {
   handleFirstLevelChange(event) {
     this.setState({firstLevelIndex: event.target.selectedIndex});
     this.setState({firstLevel: event.target.value});
-	this.setState({secondLevelIndex: 0});
+	  this.setState({secondLevelIndex: 0});
   }
 
   handleSecondLevelChange(event) {
