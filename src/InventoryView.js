@@ -14,8 +14,7 @@ class InventoryView extends Component {
         this.onInventoryChange = this.onInventoryChange.bind(this);
     }
 
-    componentDidMount() {
-        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.MATS );
+    componentDidMount() {        
         document.addEventListener('invChange', this.onInventoryChange);
     }
 
@@ -23,24 +22,19 @@ class InventoryView extends Component {
         this.setState({tmpName:nextProps.name});
     }
     componentWillUnmount() {
-        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.MATS );
         document.removeEventListener('invChange', this.onInventoryChange);
     }
 
 
     render() {
         var self = this;
-        //var tierCount = Object.keys(Consts.crystalTiers).length;
-        //var localTiers = Consts.crystalTiers;
-        //var localType = Consts.crystalTypes;
-        //var localTypeArr = Array.from(Object.keys(localType));
         return (
                <div className='tableContainer' align='center'>
                <h2>Have</h2>
                <table className='centered'><tbody>
                <tr><th/>
                {
-                   Consts.crystalTiers.map(function(item) {                       
+                   Consts.crystalTiers.map(function(item) {
                        return(<th title={item.name}>{item.shortName}</th>);
                    })
                }

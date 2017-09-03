@@ -14,30 +14,24 @@ class PlannedView extends Component {
     }
 
     componentDidMount() {
-        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.MATS );
-        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.ABILITIES );
         document.addEventListener('invChange', this.onInventoryChange);
         document.addEventListener('abilityChange', this.onInventoryChange);
     }
 
     componentWillUnmount() {
-        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.MATS );
-        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.ABILITIES );
         document.removeEventListener('invChange', this.onInventoryChange);
         document.removeEventListener('abilityChange', this.onInventoryChange);
     }
 
     render() {
         var self = this;
-        //var localType = Consts.crystalTypes;
-        //var localTypeArr = Array.from(Object.keys(localType));
         return(
             <div className='tableContainer' align='center'>
                 <h2>Need</h2>
                 <table className='centered'><tbody>
                 <tr><th/>
                 {
-                    Consts.crystalTiers.map(function(item) {                        
+                    Consts.crystalTiers.map(function(item) {
                         return(<th title={item.name}>{item.shortName}</th>);
                     })
                 }
@@ -53,8 +47,7 @@ class PlannedView extends Component {
                                          alt = {title}
                                          title = {title}/></td>
                                   {self.state.planned[index].map(function(cell, innerIndex) {
-                                        var innerKey = 'plan_in_' + index + '-' + innerIndex;
-                                        //var cellId = 'plan' + index.toString() + innerIndex.toString();
+                                        var innerKey = 'plan_in_' + index + '-' + innerIndex;                                  
                                         return(
                                             <td key={innerKey}>
                                                 <input

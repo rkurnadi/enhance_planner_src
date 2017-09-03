@@ -12,21 +12,14 @@ class UnitView extends Component {
           unitId: props.unitId,
           abilityId: props.abilityId,
           abilityKey: props.abilityKey,
-          //inventoryMats: inventory.getMaterials(),
       };
 
       this.onRemove = this.onRemove.bind(this);
       this.onEnhance = this.onEnhance.bind(this);
-      //this.onAwakeThisUnit = this.onAwakeThisUnit.bind(this);
-      //this.onRemoveThisSummon = this.onRemoveThisSummon.bind(this);
-      //this.onMaterialChange = this.onMaterialChange.bind(this);
   };
 
   render() {
       var unitData = this.getRowData(this.state.unitId, this.state.abilityId, this.props.jp);
-      //console.log(unitData);
-      //console.log(unitData.name);
-      //console.log(unitData.ability);
       var typeName = Consts.crystalTypes[unitData.ability.type].name;
       return( <tr>
               <td>{unitData.name}</td>
@@ -67,8 +60,7 @@ class UnitView extends Component {
       inventory.enhanceAbility(this.state.abilityKey, this.props.jp);
   }
 
-  onRemove() {
-      //e.preventDefault();
+  onRemove() {      
       inventory.removeAbility(this.state.abilityKey);
   }
 }

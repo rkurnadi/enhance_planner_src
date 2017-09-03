@@ -9,20 +9,13 @@ class UnitTableView extends Component {
         super(props)
         this.state = this.getState();
         this.onInventoryChange = this.onInventoryChange.bind(this);
-        //this.toggleAwakeningMode = this.toggleAwakeningMode.bind(this);
     };
 
     componentDidMount() {
-        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.ABILITIES );
-        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.MATS );
-        //inventory.addListener( this.onInventoryChange, inventory.LISTEN.AWAKENING_MODE );
         document.addEventListener('abilityChange', this.onInventoryChange);
     }
 
     componentWillUnmount() {
-        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.ABILITIES );
-        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.MATS );
-        //inventory.removeListener( this.onInventoryChange, inventory.LISTEN.AWAKENING_MODE );
         document.removeEventListener('abilityChange', this.onInventoryChange);
     }
 
