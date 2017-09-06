@@ -111,7 +111,7 @@
         "mp": 0,
         "name_en": "Doublehand",
         "type": 6,
-        "id": 1001,
+        "id": 700230,
         "mats": [
           20,
           15,
@@ -127,7 +127,7 @@
         "mp": 0,
         "name_en": "Doublehand",
         "type": 6,
-        "id": 1002,
+        "id": 700240,
         "mats": [
           30,
           23,
@@ -143,7 +143,7 @@
         "mp": 45,
         "name_en": "Dark Spiral",
         "type": 3,
-        "id": 1003,
+        "id": 700650,
         "mats": [
           15,
           10,
@@ -159,7 +159,7 @@
         "mp": 45,
         "name_en": "Dark Spiral",
         "type": 3,
-        "id": 1004,
+        "id": 700660,
         "mats": [
           23,
           15,
@@ -169,13 +169,13 @@
         ]
       },
       {
-        "name": "Awakening of the Darkness+1",
+        "name": "Dark Awakening+1",
         "level": "+1",
         "name_jp": "闇の目覚め",
         "mp": 14,
         "name_en": "Awakening of the Darkness",
         "type": 6,
-        "id": 1005,
+        "id": 700490,
         "mats": [
           15,
           8,
@@ -185,13 +185,13 @@
         ]
       },
       {
-        "name": "Awakening of the Darkness+2",
+        "name": "Dark Awakening+2",
         "level": "+2",
         "name_jp": "闇の目覚め",
         "mp": 14,
         "name_en": "Awakening of the Darkness",
         "type": 6,
-        "id": 1006,
+        "id": 700500,
         "mats": [
           23,
           12,
@@ -315,7 +315,7 @@
         "mp": 0,
         "name_en": "Guardian Mog",
         "type": 5,
-        "id": 1007,
+        "id": 704710,
         "mats": [
           10,
           5,
@@ -331,7 +331,7 @@
         "mp": 0,
         "name_en": "Guardian Mog",
         "type": 5,
-        "id": 1008,
+        "id": 704720,
         "mats": [
           15,
           8,
@@ -341,13 +341,13 @@
         ]
       },
       {
-        "name": "Magi Release+1",
+        "name": "Unlock Magic+1",
         "level": "+1",
         "name_jp": "魔導力解放",
         "mp": 21,
         "name_en": "Magi Release",
         "type": 1,
-        "id": 1009,
+        "id": 704730,
         "mats": [
           15,
           10,
@@ -357,13 +357,13 @@
         ]
       },
       {
-        "name": "Magi Release+2",
+        "name": "Unlock Magic+2",
         "level": "+2",
         "name_jp": "魔導力解放",
         "mp": 21,
         "name_en": "Magi Release",
         "type": 1,
-        "id": 1010,
+        "id": 704740,
         "mats": [
           23,
           15,
@@ -379,7 +379,7 @@
         "mp": 0,
         "name_en": "Guardian of Life",
         "type": 1,
-        "id": 1011,
+        "id": 704750,
         "mats": [
           15,
           8,
@@ -395,7 +395,7 @@
         "mp": 0,
         "name_en": "Guardian of Life",
         "type": 1,
-        "id": 1012,
+        "id": 704760,
         "mats": [
           23,
           12,
@@ -589,7 +589,7 @@
         "mp": 21,
         "name_en": "--",
         "type": 7,
-        "id": 1013,
+        "id": 703850,
         "mats": [
           10,
           8,
@@ -605,7 +605,7 @@
         "mp": 21,
         "name_en": "--",
         "type": 7,
-        "id": 1014,
+        "id": 703860,
         "mats": [
           15,
           12,
@@ -621,7 +621,7 @@
         "mp": 0,
         "name_en": "--",
         "type": 6,
-        "id": 1015,
+        "id": 703830,
         "mats": [
           20,
           15,
@@ -637,7 +637,7 @@
         "mp": 0,
         "name_en": "--",
         "type": 6,
-        "id": 1016,
+        "id": 703840,
         "mats": [
           30,
           23,
@@ -653,7 +653,7 @@
         "mp": 56,
         "name_en": "Doomsday",
         "type": 1,
-        "id": 1017,
+        "id": 70310,
         "mats": [
           20,
           15,
@@ -669,7 +669,7 @@
         "mp": 56,
         "name_en": "Doomsday",
         "type": 1,
-        "id": 1018,
+        "id": 70320,
         "mats": [
           30,
           23,
@@ -3567,7 +3567,7 @@
         "mp": 0,
         "name_en": "Doublehand",
         "type": 6,
-        "id": 1147,
+        "id": 700230,
         "mats": [
           20,
           15,
@@ -3583,7 +3583,7 @@
         "mp": 0,
         "name_en": "Doublehand",
         "type": 6,
-        "id": 1148,
+        "id": 700240,
         "mats": [
           30,
           23,
@@ -3873,7 +3873,7 @@
         "mp": 42,
         "name_en": "Meditate",
         "type": 6,
-        "id": 1165,
+        "id": 700550,
         "mats": [
           15,
           8,
@@ -3889,7 +3889,7 @@
         "mp": 42,
         "name_en": "Meditate",
         "type": 6,
-        "id": 1166,
+        "id": 700560,
         "mats": [
           23,
           12,
@@ -5799,7 +5799,7 @@
         "mp": 45,
         "name_en": "Piledriver",
         "type": 3,
-        "id": 1275,
+        "id": 702570,
         "mats": [
           20,
           15,
@@ -5815,7 +5815,7 @@
         "mp": 45,
         "name_en": "Piledriver",
         "type": 3,
-        "id": 1276,
+        "id": 702580,
         "mats": [
           30,
           23,
@@ -9795,7 +9795,7 @@
         "mp": 38,
         "name_en": "Holy Explosion",
         "type": 3,
-        "id": 1401,
+        "id": 701150,
         "mats": [
           20,
           15,
@@ -9811,7 +9811,7 @@
         "mp": 45,
         "name_en": "Holy Explosion",
         "type": 3,
-        "id": 1402,
+        "id": 701160,
         "mats": [
           30,
           23,

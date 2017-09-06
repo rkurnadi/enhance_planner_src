@@ -23,7 +23,7 @@ class App extends Component {
   componentDidMount() {
       const server = localStorage.getItem(LOCAL_STORAGE_SERVER);
       if (server) {
-          if (server == 'jp') {
+          if (server === 'jp') {
               this.setState({checked:false});
           }
           else {
