@@ -4,6 +4,13 @@ import Consts from './Consts.js'
 import classnames from 'classnames'
 import './table.css'
 
+
+Number.isInteger = Number.isInteger || function(value) {
+    return typeof value === "number" &&
+           isFinite(value) &&
+           Math.floor(value) === value;
+};
+
 class InventoryView extends Component {
     constructor(props){
         super(props);
@@ -14,12 +21,13 @@ class InventoryView extends Component {
         this.onInventoryChange = this.onInventoryChange.bind(this);
     }
 
-    componentDidMount() {        
+    componentDidMount() {
         document.addEventListener('invChange', this.onInventoryChange);
     }
 
     componentWillReceiveProps (nextProps) {
         this.setState({tmpName:nextProps.name});
+        console.log('');
     }
     componentWillUnmount() {
         document.removeEventListener('invChange', this.onInventoryChange);

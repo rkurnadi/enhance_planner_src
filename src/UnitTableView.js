@@ -12,16 +12,24 @@ class UnitTableView extends Component {
     };
 
     componentDidMount() {
+        document.addEventListener('invChange', this.onInventoryChange);
         document.addEventListener('abilityChange', this.onInventoryChange);
     }
 
     componentWillUnmount() {
         document.removeEventListener('abilityChange', this.onInventoryChange);
+        document.removeEventListener('invChange', this.onInventoryChange);
     }
 
     render() {
           var self = this;
 
+          var count = self.state.abilities.length;
+
+          if (!count) {
+              return(null);
+          }
+          else
           return(
               <div className='unitContainer'>
               <table className={classnames('centered', 'unitcosttable')}><tbody>

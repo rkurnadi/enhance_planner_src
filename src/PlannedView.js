@@ -47,7 +47,7 @@ class PlannedView extends Component {
                                          alt = {title}
                                          title = {title}/></td>
                                   {self.state.planned[index].map(function(cell, innerIndex) {
-                                        var innerKey = 'plan_in_' + index + '-' + innerIndex;                                  
+                                        var innerKey = 'plan_in_' + index + '-' + innerIndex;
                                         return(
                                             <td key={innerKey}>
                                                 <input
@@ -73,9 +73,8 @@ class PlannedView extends Component {
     }
 
     refreshState() {
-        console.log('plannedviewrefresh');
         return {
-            planned:inventory.getNeededCrystals(this.props.jp)
+            planned:inventory.getNeededCrystals(!this.props.jp)
         };
     }
 }
