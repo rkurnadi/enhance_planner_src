@@ -39,48 +39,56 @@ class Consts {
         id:0,
         src : whiteCryst,
         name: 'White',
+        name_jp: '白',
     };
 
     Black = {
         id:1,
         src : blackCryst,
         name: 'Black',
+        name_jp: '黒',
     };
 
     Green = {
         id:2,
         src : greenCryst,
         name: 'Green',
+        name_jp: '緑',
     };
 
     Power = {
         id:3,
         src : powerCryst,
         name: 'Power',
+        name_jp: '攻め',
     };
 
     Guard = {
         id:4,
         src : guardCryst,
         name: 'Guard',
+        name_jp: '守り',
     };
 
     Healing = {
         id:5,
         src : healingCryst,
         name: 'Healing',
+        name_jp: '癒し',
     };
 
     Support = {
         id:6,
         src : supportCryst,
         name: 'Support',
+        name_jp: '支援',
     };
 
     Tech = {
         id:7,
         src : techCryst,
         name: 'Tech',
+        name_jp: '技巧',
     };
 
     crystalTypes = [

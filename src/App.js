@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
-import data from './data_gl.json'
-import jp_data from './data_jp.json'
+import data from './data.json'
+//import jp_data from './data_jp.json'
 import UnitTableView from './UnitTableView';
 import classnames from 'classnames';
 import inventory from './LocalData.js'
@@ -20,7 +20,7 @@ class App extends Component {
       this.onServerChange = this.onServerChange.bind(this)
   }
 
-  componentDidMount() {
+  componentWillMount() {
       const server = localStorage.getItem(LOCAL_STORAGE_SERVER);
       if (server) {
           if (server === 'jp') {
@@ -34,7 +34,7 @@ class App extends Component {
 
   onServerChange() {
       this.setState ({ checked: !this.state.checked});
-      var event = new Event('abilityChange');
+      var event = inventory.createNewEvent('abilityChange');
       document.dispatchEvent(event);
       var serverchoice = this.state.checked ? 'jp' : 'gl';
 
@@ -55,13 +55,12 @@ class App extends Component {
         </label>
 
         <div className="parent">
-        <InventoryView/>
-        <PlannedView jp={!this.state.checked}/>
+          <InventoryView/>
+          <PlannedView jp={!this.state.checked}/>
         </div>
-        { !this.state.checked && <MyForm data={jp_data} jp={true}/> }
+        { !this.state.checked && <MyForm data={data} jp={true}/> }
         { this.state.checked && <MyForm data={data} jp={false}/> }
         <UnitTableView jp={!this.state.checked}/>
-        <p>Footer</p>
       </div>
     );
   }
@@ -82,6 +81,7 @@ class MyForm extends Component {
       secondLevel: Object.keys(props.data)[0][0],
       secondLevelIndex: 0,
       backgroundColor: 'grey',
+      test:'no',
     }
   }
 
@@ -102,46 +102,107 @@ class MyForm extends Component {
     inventory.addAbility(unitId, abilityId);
   }
 
-  getFirstLevelOptions() {
-    let items = [];
-    let count = this.props.data.length
-    for (let i = 0; i < count; i++) {
-      let unit = this.props.data[i]
-      let choice = this.props.data[i].name
+  sortjp(a, b) {
+      if (a.hasOwnProperty('jp') && (!(b.hasOwnProperty('jp')))) {
+          return 1;
+      } else if (b.hasOwnProperty('jp') && (!(a.hasOwnProperty('jp')))) {
+          return -1;
+      } else {
+          if (a.rid > b.rid) {
+              return 1;
+          } else if (a.rid < b.rid) {
+              return -1;
+          }
+          else return 0;
+      }
+  }
 
-      if (!this.props.jp && unit.hasOwnProperty('jp')) {
-        items.push(<option key={i} value={choice} style={{background:this.state.backgroundColor}}>{choice}</option>)
+
+
+  getFirstLevelOptions() {
+    var items = [];
+    var count = this.props.data.length;
+    var tempdata = this.props.data;
+
+    tempdata.sort(this.sortjp);
+
+    for (var i = 0; i < count; i++) {
+      var unit = this.props.data[i];
+      var choice_gl = this.props.data[i].ne;
+      var choice_jp = this.props.data[i].nj;
+
+      if (this.props.jp) {
+        //if gl_exclusive unit in jp_view, choice_jp would be undefined, nothing should be added to options
+        if (choice_jp) {
+          items.push(<option key={i} value={choice_jp}>{choice_jp}</option>);
+        }
+      }
+      else if (!this.props.jp && unit.hasOwnProperty('jp')) {
+        //unit has received enhancement in jp but not gl, show it in gl_view with grey background
+        items.push(<option key={i} value={choice_gl} style={{background:this.state.backgroundColor}}>{choice_gl}</option>);
       }
       else {
-        items.push(<option key={i} value={choice}>{choice}</option>)
+        items.push(<option key={i} value={choice_gl}>{choice_gl}</option>);
       }
     }
-    return items
+    return items;
   }
 
   getSecondLevelOptions() {
-      let items = []
-      let count = this.props.data[this.state.firstLevelIndex].ability.length
-      for (let i = 0; i < count; i++) {
-        let ab = this.props.data[this.state.firstLevelIndex].ability[i]
-        let choice = this.props.data[this.state.firstLevelIndex].ability[i].name
-        if (!this.props.jp && ab.hasOwnProperty('name_jp')) {
-            items.push(<option key={i} value={choice} style={{background:this.state.backgroundColor}}>{choice}</option>)
+      var self = this;
+      var items = [];
+      var abilities;
+      if (!this.props.jp) {
+          abilities = this.props.data[this.state.firstLevelIndex].ability;
+      }
+      else {
+          //first load, self.state.firstLevel is not initialized yet
+          //set abilities to first unit's abilities
+          if (self.state.firstLevel === "0") {
+              abilities = this.props.data[0].ability;
+          }
+          else {
+              //can't use firstLevelIndex since gl_exclusive units like Elza causes index mismatch
+              var units = this.props.data.filter(function(a) {
+                  var idx = self.state.firstLevel;
+                  if (a.hasOwnProperty('nj')){
+                      return a.nj === idx;
+                  }
+                  else return false;
+              })
+              abilities = units[0].ability;
+          }
+      }
+      var count = abilities.length;
+      for (var i = 0; i < count; i++) {
+        var ab = abilities[i];
+        var level = abilities[i].level;
+        var choice_gl = abilities[i].ne + level;
+        var choice_jp = abilities[i].nj;
+        if (choice_jp) {
+            choice_jp = abilities[i].nj + level;
+        }
+
+        if (this.props.jp) {
+            //gl_exclusive enhancements would have choice_jp === undefined, should not add to option
+            if (choice_jp) {
+                items.push(<option key={i} value={choice_jp}>{choice_jp}</option>);
+            }
+        }
+        else if (!this.props.jp && ab.hasOwnProperty('jp')) {
+            items.push(<option key={i} value={choice_gl} style={{background:this.state.backgroundColor}}>{choice_gl}</option>);
         }
         else {
-            items.push(<option key={i} value={choice}>{choice}</option>)
+            items.push(<option key={i} value={choice_gl}>{choice_gl}</option>);
         }
 
       }
-      return items
+      return items;
   }
 
-  refresh() {
-      return {invname:this.state.firstLevel};
-  }
   render() {
-    const firstLevelOptions = this.getFirstLevelOptions()
-    const secondLevelOptions = this.getSecondLevelOptions()
+    const firstLevelOptions = this.getFirstLevelOptions();
+    const secondLevelOptions = this.getSecondLevelOptions();
 
     return (
       <div className = "selection">
@@ -150,7 +211,7 @@ class MyForm extends Component {
         {firstLevelOptions}
       </select>
 
-      <select className='unit-select' onChange={this.handleSecondLevelChange} value={this.state.secondLevel} style={{width:'250px'}}>
+      <select className='unit-select' onChange={this.handleSecondLevelChange} value={this.state.secondLevel} style={{width:'200px'}}>
         {secondLevelOptions}
       </select>
 
