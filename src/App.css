@@ -171,13 +171,28 @@
 
 .unitcosttable {
   border-collapse: collapse;
+  width: 90% !important;
 }
 .unitcosttable td {
   border: 1px solid black;
 }
 
+.credit {
+  padding-top: 20px;
+}
 @media screen and (max-width: 1280px) {
     .unitcost {
         display: none;
+    }
+    .unitName {
+        width: 40% !important;
+    }
+
+    .abilityName {
+        width: 45% !important;
+    }
+
+    .typeName {
+        width: 10% !important;
     }
 }

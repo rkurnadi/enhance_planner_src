@@ -1,3 +1,6 @@
+.abilitiesTable {
+
+}
 
 .centered {
     width: 80%;
@@ -17,16 +20,23 @@
 
 .unit-select {
     height: 40px;
-    margin-right: 10px;
     font-size: 16px;
 }
 
+.unit-select + .unit-select {
+    margin-left: 10px;
+}
+
+.can-not-enhance {
+    opacity: 0.2;
+}
 .parent {
     text-align:center
 }
 
 .selection {
   padding-bottom: 10px;
+  text-align: center;
 }
 
 .tableContainer {
@@ -57,9 +67,61 @@
     border-radius: 25px;
     background-color: lightblue;
     width: 90%;
-    padding-bottom: 50px;
+    padding-bottom: 20px;
     text-align: center;
     display: inline-table;
+    margin-bottom: 20px;
+}
+
+.unitContainer td {
+    height: 30px;
+}
+
+.deficit {
+    background-color: lightcoral;
+}
+.unitName {
+    width: 20%;
+}
+
+.abilityName {
+    width: 30%;
+}
+
+.typeName {
+    width: 10%;
+}
+
+.enhanceBtn {
+    background-image: url('./images/check-mark.png');
+    height: 28px;
+    width: 28px;
+}
+
+.enhanceImg {
+    height: 28px;
+    width: 28px;
+}
+
+.enh_cell {
+    width: 30px;
+    border: none !important;
+    padding-left: 5px;
+}
+
+.removeBtn {
+    background-image: url('./images/close-cross.png');
+    height: 28px;
+    width: 28px;
+}
+
+.rmv_cell {
+    width: 30px;
+    border: none !important;
+}
+
+.noborder {
+    border: none !important;
 }
 
 .MyStashHeader {

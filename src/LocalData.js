@@ -1,5 +1,4 @@
-import gl_data from './data_gl.json'
-import jp_data from './data_jp.json'
+import data from './data.json'
 import Consts from './Consts.js'
 
 const LOCAL_STORAGE_INVENTORY = "inventory-id-";
@@ -25,10 +24,21 @@ class LocalData {
         // Negatives not allowed
         value = Math.max(0, value);
         this.crystals[typeId][tierId] = value;
-        localStorage.setItem(LOCAL_STORAGE_INVENTORY + typeId + '-' + tierId, value);        
-        var event = new Event('invChange');
+        localStorage.setItem(LOCAL_STORAGE_INVENTORY + typeId + '-' + tierId, value);
+
+        var event = this.createNewEvent('invChange');
         document.dispatchEvent(event);
     };
+
+    createNewEvent(eventName) {
+        if(typeof(Event) === 'function') {
+            var event = new Event(eventName);
+        } else {
+            var event = document.createEvent('Event');
+            event.initEvent(eventName, true, true);
+        }
+        return event;
+    }
 
     addAbility = function(unitId, abilityId) {
         var entry = {unit: unitId,
@@ -36,8 +46,8 @@ class LocalData {
         this.abilities.push(entry);
         this.abilitiesKeys.push(counter++);
         localStorage.setItem(LOCAL_STORAGE_ABILITIES , JSON.stringify(this.abilities));
-        //this.notifyListeners(this.LISTEN.ABILITIES);
-        var event = new Event('abilityChange');
+
+        var event = this.createNewEvent('abilityChange');
         document.dispatchEvent(event);
 
     }
@@ -47,26 +57,18 @@ class LocalData {
 
         this.abilities.splice(index, 1);
         this.abilitiesKeys.splice(index, 1);
-
         localStorage.setItem(LOCAL_STORAGE_ABILITIES , JSON.stringify(this.abilities));
-        //this.notifyListeners(this.LISTEN.ABILITIES);
-        var event = new Event('abilityChange');
+
+        var event = this.createNewEvent('abilityChange');
         document.dispatchEvent(event);
     }
 
     enhanceAbility = function(abilityKey, jp) {
         var index = this.abilitiesKeys.indexOf(abilityKey);
 
-        var data;
-        if (jp) {
-            data = jp_data;
-        }
-        else {
-            data = gl_data;
-        }
         var abilityInfo = this.abilities[index];
         var dataLen = data.length;
-        //var tempData = data;
+
         for (var i = 0; i < dataLen; i++) {
             if (data[i].id === abilityInfo.unit) {
                 var unit = data[i];
@@ -83,17 +85,25 @@ class LocalData {
 
         var crystTypeId = enhancedAbility.type;
 
+        var abilitymats;
+        if (enhancedAbility.hasOwnProperty("mc"))
+        {
+            abilitymats = enhancedAbility.mc;
+        }
+        else if (jp) {
+            abilitymats = enhancedAbility.mj;
+        }
+        else {
+            abilitymats = enhancedAbility.me;
+        }
+
         this.removeAbility(abilityKey);
         for (var k=0; k<5; k++)
         {
-          this.update(crystTypeId, k, this.crystals[crystTypeId][k] - enhancedAbility.mats[k]);
+          this.update(crystTypeId, k, this.crystals[crystTypeId][k] - abilitymats[k]);
         }
 
-        console.log('calculated')
-
-        console.log('found enhanced');
-        console.log(enhancedAbility);
-        var event = new Event('abilityChange');
+        var event = this.createNewEvent('abilityChange');
         document.dispatchEvent(event);
     }
 
@@ -140,13 +150,6 @@ class LocalData {
             retArr[outerIndex] = typeArr;
         });
 
-        var data;
-        if (jp) {
-            data = jp_data;
-        }
-        else {
-            data = gl_data;
-        }
         //calculate total of needed crystals
         self.abilities.forEach(function(abilityInfo) {
             var unit = data.filter(function(u) {
@@ -156,10 +159,28 @@ class LocalData {
                 return a.id === abilityInfo.ability;
             })
             var ability = ability_arr[0];
+
+            if (jp && !ability.hasOwnProperty('nj')) {
+                return;
+            }
+            
             var crystTypeNumber = ability.type;
+
+            var abilitymats;
+            if (ability.hasOwnProperty("mc"))
+            {
+                abilitymats = ability.mc;
+            }
+            else if (jp) {
+                abilitymats = ability.mj;
+            }
+            else {
+                abilitymats = ability.me;
+            }
+
             for (var i = 0; i<5; i++)
             {
-                retArr[crystTypeNumber][i] += ability.mats[i];
+                retArr[crystTypeNumber][i] += abilitymats[i];
             }
         });
 
