@@ -56,10 +56,22 @@ class UnitView extends Component {
         wikiLink = 'https://exvius.gamepedia.com/' + unitData.ne + '#Ability_Awakening';
       }
 
+      var gilCost;
+      if (unitData.ability.hasOwnProperty('cost')) {
+          gilCost = unitData.ability.cost;
+      }
+      else if (this.props.jp) {
+          gilCost = unitData.ability.cj;
+      }
+      else {
+          gilCost = unitData.ability.ce;
+      }
+
       return( <tr>
               <td className='unitName'>{name}</td>
               <td className='abilityName'>{wikiLink ? <a href={wikiLink} target='_blank'>{ability}</a> : {ability}}</td>
               <td className='typeName'>{typeName}</td>
+              <td className='unitcost'>{gilCost}</td>
               <td className={'unitcost' + (inventoryMats[unitData.ability.type][0] < abilitymats[0] ? ' deficit' : '')}>{abilitymats[0]}</td>
               <td className={'unitcost' + (inventoryMats[unitData.ability.type][1] < abilitymats[1] ? ' deficit' : '')}>{abilitymats[1]}</td>
               <td className={'unitcost' + (inventoryMats[unitData.ability.type][2] < abilitymats[2] ? ' deficit' : '')}>{abilitymats[2]}</td>

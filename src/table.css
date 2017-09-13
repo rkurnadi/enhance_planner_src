@@ -120,6 +120,9 @@
     border: none !important;
 }
 
+.noborder {
+    border: none !important;
+}
 
 .MyStashHeader {
     margin-top: 24px;
