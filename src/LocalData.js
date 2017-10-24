@@ -10,15 +10,6 @@ class LocalData {
     crystals = [];
     abilities = [];
     abilitiesKeys = [];
-    listeners = {};
-
-    LISTEN = {
-        ABILITIES: 'LISTEN_ABILITIES',
-        MATS:   'LISTEN_MATS',
-        FILTER: 'LISTEN_FILTER',
-        AWAKENING_MODE: 'LISTEN_AWAKENING_MODE',
-        AWAKENING_ANIM: 'LISTEN_AWAKENING_ANIM',
-    };
 
     update = function(typeId, tierId, value) {
         // Negatives not allowed
@@ -34,7 +25,7 @@ class LocalData {
         if(typeof(Event) === 'function') {
             var event = new Event(eventName);
         } else {
-            var event = document.createEvent('Event');
+            event = document.createEvent('Event');
             event.initEvent(eventName, true, true);
         }
         return event;
@@ -85,6 +76,11 @@ class LocalData {
 
         var crystTypeId = enhancedAbility.type;
 
+      	if (enhancedAbility.hasOwnProperty("type_gl") && !jp)
+      	{
+      	    crystTypeId = enhancedAbility.type_gl;
+      	}
+
         var abilitymats;
         if (enhancedAbility.hasOwnProperty("mc"))
         {
@@ -106,35 +102,6 @@ class LocalData {
         var event = this.createNewEvent('abilityChange');
         document.dispatchEvent(event);
     }
-
-    addListener = function( listener, listenType ) {
-        var group = this.listeners[listenType];
-        if (!Array.isArray(group)) {
-            group = this.listeners[listenType] = [];
-        }
-        group.push(listener);
-    };
-
-    removeListener = function( listener, listenType ) {
-        var group = this.listeners[listenType];
-        if (!Array.isArray(group)) {
-            return;
-        }
-        var index = group.indexOf( listener );
-        if (index !== -1) {
-            group.splice(index, 1);
-        }
-    };
-
-    notifyListeners = function(listenType) {
-        var group = this.listeners[listenType];
-        if (!Array.isArray(group)) {
-            return;
-        }
-        group.forEach(function(listener) {
-            listener();
-        });
-    };
 
     //calculate needed crystals based on this.state.crystals and this.state.abilities
     //
@@ -163,8 +130,12 @@ class LocalData {
             if (jp && !ability.hasOwnProperty('nj')) {
                 return;
             }
-            
+
             var crystTypeNumber = ability.type;
+      	    if (ability.hasOwnProperty("type_gl") && !jp)
+      			{
+      				crystTypeNumber = ability.type_gl;
+      			}
 
             var abilitymats;
             if (ability.hasOwnProperty("mc"))

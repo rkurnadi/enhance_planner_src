@@ -35,7 +35,12 @@ class UnitView extends Component {
       else {
           abilitymats = unitData.ability.me;
       }
-      var typeName = this.props.jp ? Consts.crystalTypes[unitData.ability.type].name_jp : Consts.crystalTypes[unitData.ability.type].name;
+      var abilityType = unitData.ability.type;
+      if (unitData.ability.hasOwnProperty("type_gl") && !this.props.jp)
+      {
+	  abilityType = unitData.ability.type_gl;
+      }
+      var typeName = this.props.jp ? Consts.crystalTypes[abilityType].name_jp : Consts.crystalTypes[abilityType].name;
       var name = this.props.jp ? unitData.nj : unitData.ne
       var ability = this.props.jp ? unitData.ability.nj : unitData.ability.ne
       ability = ability + unitData.ability.level
@@ -72,11 +77,11 @@ class UnitView extends Component {
               <td className='abilityName'>{wikiLink ? <a href={wikiLink} target='_blank'>{ability}</a> : {ability}}</td>
               <td className='typeName'>{typeName}</td>
               <td className='unitcost'>{gilCost}</td>
-              <td className={'unitcost' + (inventoryMats[unitData.ability.type][0] < abilitymats[0] ? ' deficit' : '')}>{abilitymats[0]}</td>
-              <td className={'unitcost' + (inventoryMats[unitData.ability.type][1] < abilitymats[1] ? ' deficit' : '')}>{abilitymats[1]}</td>
-              <td className={'unitcost' + (inventoryMats[unitData.ability.type][2] < abilitymats[2] ? ' deficit' : '')}>{abilitymats[2]}</td>
-              <td className={'unitcost' + (inventoryMats[unitData.ability.type][3] < abilitymats[3] ? ' deficit' : '')}>{abilitymats[3]}</td>
-              <td className={'unitcost' + (inventoryMats[unitData.ability.type][4] < abilitymats[4] ? ' deficit' : '')}>{abilitymats[4]}</td>
+              <td className={'unitcost' + (inventoryMats[abilityType][0] < abilitymats[0] ? ' deficit' : '')}>{abilitymats[0]}</td>
+              <td className={'unitcost' + (inventoryMats[abilityType][1] < abilitymats[1] ? ' deficit' : '')}>{abilitymats[1]}</td>
+              <td className={'unitcost' + (inventoryMats[abilityType][2] < abilitymats[2] ? ' deficit' : '')}>{abilitymats[2]}</td>
+              <td className={'unitcost' + (inventoryMats[abilityType][3] < abilitymats[3] ? ' deficit' : '')}>{abilitymats[3]}</td>
+              <td className={'unitcost' + (inventoryMats[abilityType][4] < abilitymats[4] ? ' deficit' : '')}>{abilitymats[4]}</td>
               <td className='enh_cell'><input type='image' src={check} className={'enhanceImg' + (canEnhance ? '' : ' can-not-enhance')} alt='Enhance' onClick={this.onEnhance} disabled={!canEnhance} title={(!canEnhance ? 'Not enough crystals to enhance' : 'Enhance')}/></td>
               <td className='rmv_cell'><input type='image' src={cross} className='removeImg' alt='Remove' onClick={this.onRemove} title='Remove from list'/></td>
              </tr>
@@ -109,6 +114,12 @@ class UnitView extends Component {
 
   canEnhance(unitAbility) {
       var abilityMats;
+      var abilityType = unitAbility.type;
+
+      if (unitAbility.hasOwnProperty("type_gl") && !this.props.jp) {
+          abilityType = unitAbility.type_gl;
+      }
+
       if (unitAbility.hasOwnProperty("mc")) {
           abilityMats = unitAbility.mc;
       } else if (this.props.jp) {
@@ -120,7 +131,7 @@ class UnitView extends Component {
 
       var canAwake = true;
       for (var k = 0; k < 5; k++) {
-          if (abilityMats[k] > inventory.crystals[unitAbility.type][k]) {
+          if (abilityMats[k] > inventory.crystals[abilityType][k]) {
               canAwake = false;
               break;
           }

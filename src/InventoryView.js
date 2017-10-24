@@ -37,13 +37,14 @@ class InventoryView extends Component {
     render() {
         var self = this;
         return (
-               <div className='tableContainer' align='center'>
+               <div className='tableContainer'>
                <h2>Have</h2>
                <table className='centered'><tbody>
                <tr><th/>
                {
-                   Consts.crystalTiers.map(function(item) {
-                       return(<th title={item.name}>{item.shortName}</th>);
+                   Consts.crystalTiers.map(function(item, index) {
+					   var headerKey = 'h'+index;
+                       return(<th key={headerKey} title={item.name}>{item.shortName}</th>);
                    })
                }
                </tr>

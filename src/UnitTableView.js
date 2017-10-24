@@ -53,8 +53,8 @@ class UnitTableView extends Component {
               })}
               <tr><td className='noborder'/>
                   <td className='noborder'/>
-                  <td className='noborder'/>
-                  <td>{totalGil}</td>
+                  <td className='noborder'>Total Gil: </td>
+                  <td className='noborder'>{totalGil}</td>
                   <td className='noborder'/>
                   <td className='noborder'/>
                   <td className='noborder'/>
@@ -82,7 +82,7 @@ class UnitTableView extends Component {
             if (ability.hasOwnProperty('cost')) {
                 total = total + ability.cost;
             }
-            else if (self.props.jp) {
+            else if (self.props.jp && ability.hasOwnProperty('cj')) {
                 total = total + ability.cj;
             }
             else {

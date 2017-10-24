@@ -26,13 +26,14 @@ class PlannedView extends Component {
     render() {
         var self = this;
         return(
-            <div className='tableContainer' align='center'>
+            <div className='tableContainer'>
                 <h2>Need</h2>
                 <table className='centered'><tbody>
                 <tr><th/>
                 {
-                    Consts.crystalTiers.map(function(item) {
-                        return(<th title={item.name}>{item.shortName}</th>);
+                    Consts.crystalTiers.map(function(item,index) {
+						var headerKey = 'h'+index;
+                        return(<th key={headerKey} title={item.name}>{item.shortName}</th>);
                     })
                 }
                 </tr>
@@ -74,7 +75,7 @@ class PlannedView extends Component {
 
     refreshState() {
         return {
-            planned:inventory.getNeededCrystals(!this.props.jp)
+            planned:inventory.getNeededCrystals(this.props.jp)
         };
     }
 }

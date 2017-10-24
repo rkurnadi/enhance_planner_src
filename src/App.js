@@ -74,6 +74,8 @@ class MyForm extends Component {
     this.handleFirstLevelChange = this.handleFirstLevelChange.bind(this)
     this.handleSecondLevelChange = this.handleSecondLevelChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleSubmitAll = this.handleSubmitAll.bind(this)
+	  this.sortjp = this.sortjp.bind(this)
 
     this.state = {
       firstLevel: Object.keys(props.data)[0],
@@ -97,27 +99,85 @@ class MyForm extends Component {
   }
 
   handleSubmit(event) {
-    var unitId = this.props.data[this.state.firstLevelIndex].id
-    var abilityId = this.props.data[this.state.firstLevelIndex].ability[this.state.secondLevelIndex].id
+  	var self = this;
+    var unitId;
+  	var abilityId;
+  	if (!self.props.jp) {
+  		unitId = self.props.data[self.state.firstLevelIndex].id
+  		abilityId = self.props.data[self.state.firstLevelIndex].ability[self.state.secondLevelIndex].id
+  	}
+  	else {
+  		var units = this.props.data.filter(function(a) {
+  					  var name = self.state.firstLevel;
+  					  if (name === "0") {
+  						name = self.props.data[0].nj;
+  					  }
+  					  if (a.hasOwnProperty('nj')){
+  						return a.nj === name;
+  					  }
+  					  else return false;
+  				  })
+  		var selectedUnit = units[0]
+  		unitId = selectedUnit.id;
+  		abilityId = selectedUnit.ability[this.state.secondLevelIndex].id;
+  	}
     inventory.addAbility(unitId, abilityId);
   }
 
-  sortjp(a, b) {
-      if (a.hasOwnProperty('jp') && (!(b.hasOwnProperty('jp')))) {
-          return 1;
-      } else if (b.hasOwnProperty('jp') && (!(a.hasOwnProperty('jp')))) {
-          return -1;
-      } else {
-          if (a.rid > b.rid) {
-              return 1;
-          } else if (a.rid < b.rid) {
-              return -1;
-          }
-          else return 0;
-      }
+  handleSubmitAll(event) {
+    var self = this;
+    var unitId;
+    var selectedUnit;
+
+    if(!self.props.jp) {
+      selectedUnit = self.props.data[self.state.firstLevelIndex];
+    }
+    else {
+      var units = this.props.data.filter(function(a) {
+  					  var name = self.state.firstLevel;
+  					  if (name === "0") {
+  						name = self.props.data[0].nj;
+  					  }
+  					  if (a.hasOwnProperty('nj')){
+  						return a.nj === name;
+  					  }
+  					  else return false;
+  				  })
+  		selectedUnit = units[0]
+
+    }
+
+    unitId = selectedUnit.id;
+    selectedUnit.ability.forEach(function(ability) {
+        var abilityId = ability.id;
+        inventory.addAbility(unitId, abilityId);
+    });
   }
 
-
+  sortjp(a, b) {
+    if (this.props.jp) {
+      if (a.rid > b.rid) {
+        return 1;
+      } else if (a.rid < b.rid) {
+        return -1;
+      }
+      else return 0;
+    }
+    else if (a.hasOwnProperty('jp') && (!(b.hasOwnProperty('jp')))) {
+          return 1;
+    }
+    else if (b.hasOwnProperty('jp') && (!(a.hasOwnProperty('jp')))) {
+          return -1;
+    }
+    else {
+      if (a.ne > b.ne) {
+        return 1;
+      } else if (a.ne < b.ne) {
+        return -1;
+      }
+      else return 0;
+  	}
+  }
 
   getFirstLevelOptions() {
     var items = [];
@@ -216,6 +276,7 @@ class MyForm extends Component {
       </select>
 
       <button className={classnames('button', 'unit-select')} onClick={this.handleSubmit}>Add</button>
+      <button className={classnames('button', 'unit-select')} onClick={this.handleSubmitAll}>Add All</button>
       </div>
     )
   }
